@@ -1,0 +1,79 @@
+---
+title: "STATS 780 Assignment 1"
+author: "Anna Ly"
+format: pdf
+editor: visual
+---
+
+## Dataset Sourcing
+
+Here we are working on the annual crop dataset, specifically looking at Manitoba and Saskatchewan between the years 2009 through 2012. Each colour on the map corresponds to different types of crops and terrains. For example, the rgb codes (red = 255, green = 255, blue = 0) corresponds to shrubland, and (red = 255, green = 255, blue = 153) correspond to corn. This data was collected by the Earth Observation Team of the Science and Technology Branch (STB) at Agriculture and Agri-Food Canada (AAFC) to understand how the cropland was used across Canadian provinces.
+
+The dataset was sourced from the Open Government Portal using the following filter options:
+
+-   Portal Type: Open Data.
+
+-   Collection Type: Open Maps.
+
+-   Resource Type: Dataset.
+
+-   Format: GeoTIF
+
+-   Update Frequency: Annually
+
+The exact geotif files can be found [here](https://open.canada.ca/data/en/dataset/ba2645d5-4458-414d-b196-6303ac06c1c9).
+
+## Application for Crop Data
+
+Here we are observing the types of habitat types we have in Canada (such as grassland, wetlands, etc.,) as well as the types of crops that are grown in the provinces of Manitoba and Saskatchewan. This allows us to:
+1. See how the agricultural landscape changes throughout the years (i.e., how the habitat types are affected and whether they became transformed as crop fields.)
+2. See what types of crops are grown throughout the years, and how the amount change (whether it be decreasing or increasing.)
+By seeing the above, it helps provide context for future agricultural decisions, such as what crops we may need to grow but also the amount of natural land being transformed into farmland, potentially destroying ecosystems.
+
+In particular, in this study we're going to be analyzing the amount of corn and soybeans.
+
+## Data Transformation and Preprocessing:
+INSTRUCTIONS: Describe the data transformation and pre-processing steps you took to clean and prepare the data for analysis. Be specific about the methods used.
+
+TODO...
+
+## Single-variable Analysis - The Difference in Amount of Cropland Used for Corn
+
+Variable of focus: Corn
+
+Research question: how much land is dedicated to corn in the provinces Manitoba and Saskatchewan throughout the years 2009 to 2012? Are farmers growing more or less corn?
+
+
+• Use appropriate visualization methods to explore the distribution or changes of this
+variable over time.
+• Clearly explain any statistical transformations you applied and interpret the results
+
+## Multi-variable Analysis
+
+Variable of focus: Soybeans, Province type
+
+Research question: how much land is dedicated to soybeans in the provinces Manitoba and Saskatchewan throughout the years 2009 to 2012? Are farmers growing more or less soybeans?
+
+• Use appropriate visualization methods to explore the relationship or changes of these
+variables over time or across spatial regions.
+• Describe any statistical transformations used and interpret the findings.
+
+
+
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+1 + 1
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
