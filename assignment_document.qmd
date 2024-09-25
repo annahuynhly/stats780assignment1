@@ -1,79 +1,130 @@
 ---
 title: "STATS 780 Assignment 1"
-author: "Anna Ly"
-format: pdf
-editor: visual
+subtitle: "Annual Crop Inventory of Saskatchewan & Manitoba"
+author: 
+  - name: "Anna Ly (400254496)"
+    affiliation: "McMaster University"
+date: "September 24, 2024"
+format: 
+  pdf: 
+    documentclass: article
+    geometry: "margin=1in"
+    titlepage: true
+    titlepage-color: "FFFFFF"
+    titlepage-text-color: "000000"
+    titlepage-rule-height: 2
+bibliography: test.bib
+bibliographystyle: apa
 ---
 
-## Dataset Sourcing
+\newpage
 
-Here we are working on the annual crop dataset, specifically looking at Manitoba and Saskatchewan between the years 2009 through 2012. Each colour on the map corresponds to different types of crops and terrains. For example, the rgb codes (red = 255, green = 255, blue = 0) corresponds to shrubland, and (red = 255, green = 255, blue = 153) correspond to corn. This data was collected by the Earth Observation Team of the Science and Technology Branch (STB) at Agriculture and Agri-Food Canada (AAFC) to understand how the cropland was used across Canadian provinces.
+# Dataset Sourcing
+
+Here we are working on the annual crop dataset, specifically looking at Manitoba and Saskatchewan between the years 2009 through 2013. Each colour on the map corresponds to different types of crops and terrains; a specific point is labelled by a crop if at least 85% of the 30m by 30m (where m represents meters) map is dominated by said crop. For example, the rgb codes (red = 255, green = 255, blue = 153) correspond to a location that has at least 85% corn. (There is no public documentation regarding what happens if an area is not dominated by any crop or type of terrain.) This data was collected by the Earth Observation Team of the Science and Technology Branch (STB) at Agriculture and Agri-Food Canada (AAFC) to understand how the cropland was used across Canadian provinces.
 
 The dataset was sourced from the Open Government Portal using the following filter options:
 
--   Portal Type: Open Data.
+**Portal Type:** Open Data. **Collection Type:** Open Maps. **Resource Type:** Dataset. **Format:** GeoTIF. **Update Frequency:** Annually
 
--   Collection Type: Open Maps.
+The exact geotif files can be found [here](https://open.canada.ca/data/en/dataset/ba2645d5-4458-414d-b196-6303ac06c1c9) (@canada_annual).
 
--   Resource Type: Dataset.
+# Application for Crop Data
 
--   Format: GeoTIF
+This data allows users to observe habitat types in Canada (such as grassland, wetlands, etc.,) as well as the types of crops that are grown in the each province. This allows us to:
 
--   Update Frequency: Annually
+1\. See how the agricultural landscape changes throughout the years (i.e., how the habitat types are affected and whether they became transformed as crop fields.)
 
-The exact geotif files can be found [here](https://open.canada.ca/data/en/dataset/ba2645d5-4458-414d-b196-6303ac06c1c9).
+2\. See what types of crops are grown throughout the years and whether there are an increasing or decreasing amount of a particular crop grown.
 
-## Application for Crop Data
+As a result, the data provides context to create future agricultural decisions, such as what crops we may need to grow but also the amount of natural land being transformed into farmland. For this study we will analyze the amount of plot land used to grow corn and soybeans.
 
-Here we are observing the types of habitat types we have in Canada (such as grassland, wetlands, etc.,) as well as the types of crops that are grown in the provinces of Manitoba and Saskatchewan. This allows us to:
-1. See how the agricultural landscape changes throughout the years (i.e., how the habitat types are affected and whether they became transformed as crop fields.)
-2. See what types of crops are grown throughout the years, and how the amount change (whether it be decreasing or increasing.)
-By seeing the above, it helps provide context for future agricultural decisions, such as what crops we may need to grow but also the amount of natural land being transformed into farmland, potentially destroying ecosystems.
+# Data Transformation and Preprocessing Steps
 
-In particular, in this study we're going to be analyzing the amount of corn and soybeans.
+Although the Annual Crop Data comes with a plethora of geotif files, ranging from 2009 to 2024, I specifically chose to download between 2009 and 2013 for Saskatchewan and Manitoba due to computational limitations; the geotif files (especially those in Ontario) were massive in size and my machine was unable to process all of them. For similar reasons, I narrowed down to analyze specific crops of interest (such as cereals and legumes).
 
-## Data Transformation and Preprocessing:
-INSTRUCTIONS: Describe the data transformation and pre-processing steps you took to clean and prepare the data for analysis. Be specific about the methods used.
+Here are the pre-processing steps I took to clean and prepare for analysis.
 
-TODO...
+1.  Used the R [terra library](https://cran.r-project.org/web/packages/terra/index.html) @terracite to create a SpatRaster object from the geotif files.
 
-## Single-variable Analysis - The Difference in Amount of Cropland Used for Corn
+2.  Extracted the values from the SpatRaster object to create a vector which contains the numeric codes (a vector of integers). These numerical codes correspond to a specific geographic region. For example, the number "147" corresponds to "corn". As a result, I did encounter **missing values** as I interpreted them to not be associated to the crops of interest. Furthermore, there were **no outliers** for me to deal with; either the crop field was present or it was not.
 
-Variable of focus: Corn
+3.  Take the sum of the amount of times a specific numerical code appeared to count the amount of land used for specific crops such as corn or soybeans.
 
-Research question: how much land is dedicated to corn in the provinces Manitoba and Saskatchewan throughout the years 2009 to 2012? Are farmers growing more or less corn?
+4.  Construct a new data frame, which includes the year, the province, and the number of plots used for specific crops. This new data frame can now be used for analysis and constructing graphs.
 
+# Single-variable Analysis - The Difference in Amount of Cropland Used for Corn
 
-• Use appropriate visualization methods to explore the distribution or changes of this
-variable over time.
-• Clearly explain any statistical transformations you applied and interpret the results
+**Research question:** how much land is dedicated to **corn** (the variable of interest) in the provinces Manitoba and Saskatchewan throughout the years 2009 to 2013? Are farmers growing more or less corn?
 
-## Multi-variable Analysis
-
-Variable of focus: Soybeans, Province type
-
-Research question: how much land is dedicated to soybeans in the provinces Manitoba and Saskatchewan throughout the years 2009 to 2012? Are farmers growing more or less soybeans?
-
-• Use appropriate visualization methods to explore the relationship or changes of these
-variables over time or across spatial regions.
-• Describe any statistical transformations used and interpret the findings.
-
-
-
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
-
-```{r}
-1 + 1
-```
-
-You can add options to executable code like this
+Using the new data frame (the details for its creation is outlined in the previous section), I extracted the counts for the amount of plots containing corn in both Manitoba and Saskatchewan. Here's a stacked bar plot, showing the total amount of corn being planted throughout the years:
 
 ```{r}
 #| echo: false
-2 * 2
+#| message: false
+library(tidyverse)
+
+graph_data = read.csv("CropData.csv", header = TRUE)
+ggplot(graph_data, aes(x = factor(Year), y = Corn_Production, fill = Region)) +
+  geom_bar(stat = "identity") + 
+  labs(title = "Corn Production: Saskatchewan and Manitoba", 
+       x = "Year", 
+       y = "Amount of Plots Used for Corn Production") +
+  theme_minimal() +           
+  scale_fill_manual(values = c("#0092d6", "#da1a1a")) 
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+As predicted, the amount of land being used to grow corn increases year by year. Hence, farmers are growing more corn and/or there's a larger demand for corn farmers. The exact values (combining Manitoba and Saskatchewan) year to year is 291001, 305179, 1115682, 1594023, 2107593, respectively. More research needs to be done to understand exactly why there are more land used for corn fields. However, a possible hypothesis is that time passing is highly correlated with population growth and the need for more food.
+
+It is interesting to see that most of the corn production is in Manitoba, even though Saskatchewan and Manitoba had comparable populations in 2009. The population in Saskatchewan was 1,023,810 @gov_saskatchewan and the population in Manitoba was 1,214,403 @gov_manitoba. Again, more research needs to be done to understand why this occurred, but this caveat is beyond the scope of this report.
+
+# Multi-Variable Analysis
+
+**Research question:** how much land is dedicated to soybeans in the provinces Manitoba and Saskatchewan throughout the years 2009 to 2012? Are farmers growing more or less soybeans?
+
+**Variables of focus:** amount of crop used for soybeans, province.
+
+Again, using the aforementioned data frame, I extracted the counts for the amount of plots containing soybeans in both Manitoba and Saskatchewan. Here's a line plot, where there's a separate line for Saskatchewan and Manitoba, showing the total amount of corn being planted throughout the years:
+
+```{r}
+#| echo: false
+ggplot(graph_data, aes(x = Year, y = Soybeans_Production, color = Region)) +
+  geom_line(linewidth = 1) +   
+  geom_point(size = 3) +        
+  labs(title = "Soybeans Production: Saskatchewan and Manitoba", 
+       x = "Year", 
+       y = "Amount of Plots Used for Soybean Production") + 
+  scale_color_manual(values = c("#FF6666", "#6699FF")) +
+  theme_minimal()         
+```
+
+Similar to the previous research question, we find that more crops (in this case, soybeans) are being grown in Manitoba in comparison to Saskatchewan. Hence, farmers are growing more soybeans or there's a larger demand for soybeans. Ordering from 2009 to 2013, the amount of 30m by 30m plots for soybeans grown in Manitoba are: 523395, 1052033, 2775207, 4791723, 5610724. Additionally, the amount of soybeans grown for Saskatchewan are: 8258, 9784, 6296, 210324, 672449. Again, more research needs to be done to understand why more crops are being grown in Manitoba compared to Saskatchewan.
+
+# Interactive Visualization with Shiny
+
+I have developed an interactive Shiny app @shinyappcite using R to investigate the multi-variable analysis research question. In fact, it explores additional crops that I did not have the space to discuss here, such as oats. The link to the Shiny app: <https://annaly.shinyapps.io/STATS780Homework1/>
+
+I used additional packages, such as shinycssloaders to create beautiful loading screens when creating different graphs @shinycssloaderscite, colourpicker so the user can easily switch the colours of the graphs @colourpickercite, and tidyverse to create the beautiful plots @tidyversecite. Occasionally, [Github Copilot](https://copilot.github.com/) @github_2024 was used to assist with writing code for the R Shiny website; in particular, it provided a skeleton to write sections.
+
+Students can select a crop (either grains and legumes), the type of plot they would like to check (either a bar plot or a line plot), whether they would want a comparison or an individual plot, and the colour scheme. In particular, this app helps to show possible visual representations of how much land is used for individual crops throughout the years.
+
+The code for the Shiny app will be included in the supplementary material.
+
+\newpage
+
+# References
+
+```{=html}
+<!-- 
+
+-   [Open Government Portal](https://open.canada.ca/data/en/dataset/ba2645d5-4458-414d-b196-6303ac06c1c9). Crop Inventory Data.
+
+-   [Government of Saskatchewan](https://www.saskatchewan.ca/-/media/news-archive/2009/march/26/saskatchewan-grew-by-more-than-15000-people-in-2008/annual-report.pdf). Annual Population Report. March 26, 2009.
+
+- [Province of Manitoba](https://www.gov.mb.ca/health/population/pr2009.pdf). Manitoba Health and Healthy Living Population Report. June 1, 2009 
+
+-   [Copilot with R](https://copilot.github.com/) - this was used to assist with writing code for the R Shiny website; in particular, it provided a skeleton to write sections.
+
+-->
+```
+

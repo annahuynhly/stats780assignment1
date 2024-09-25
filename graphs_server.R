@@ -1,8 +1,4 @@
 
-#output$debugging123 = renderText(
-#  "123"
-#)
-
 use_colours = reactive({
   if(input$colour_scheme_type == "manual"){
     c(convert_to_hex(input$comp_mani_colour), convert_to_hex(input$comp_sask_colour))
