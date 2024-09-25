@@ -18,7 +18,7 @@ comparison_barplot = function(dataset, crop_id, colours = c("#0092d6", "#da1a1a"
   #' Saskatchewan.
   production_type = paste0(crop_id, "_Production")
   title_name = paste0("Stacked Bar Plot of ", crop_id ," Production from Manitoba and Saskatchewan")
-  
+  # (GitHub Copilot helped with the skeleton)
   ggplot(dataset, aes(x = factor(Year), y = !!sym(production_type), fill = Region)) +
     geom_bar(stat = "identity") + 
     labs(title = title_name, x = "Year", 
@@ -35,6 +35,7 @@ comparison_lineplot = function(dataset, crop_id, colours = c("#0092d6", "#da1a1a
   #' Saskatchewan.
   production_type = paste0(crop_id, "_Production")
   title_name = paste0("Line Plots of ", crop_id ," Production from Manitoba and Saskatchewan")
+  # (GitHub Copilot helped with the skeleton)
   ggplot(dataset, aes(x = Year, y = !!sym(production_type), color = Region)) +
     geom_line(linewidth = 1) +   
     geom_point(size = 3) +      
@@ -60,6 +61,7 @@ individual_barplot = function(dataset, type, crop_id, colour = c("#0092d6")){
     graph_title = paste0("Stacked Bar Plot of ", crop_id, " Production from Saskatchewan")
     individual_data = subset(dataset, Region == "Saskatchewan")
   }
+  # (GitHub Copilot helped with the skeleton)
   ggplot(individual_data, aes(x = factor(Year), y = !!sym(production_type))) +
     geom_bar(stat = "identity", fill = colour[1]) + 
     labs(title = graph_title, x = "Year", 
@@ -83,6 +85,7 @@ individual_lineplot = function(dataset, type, crop_id, colour = c("#0092d6")){
     graph_title = paste0("Line Plot of ", crop_id, " Production from Saskatchewan")
     individual_data = subset(dataset, Region == "Saskatchewan")
   }
+  # (GitHub Copilot helped with the skeleton)
   ggplot(individual_data, aes(x = Year, y = !!sym(production_type))) +
     geom_line(linewidth = 1, color = colour[1]) +   
     geom_point(size = 3, color = colour[1]) +     

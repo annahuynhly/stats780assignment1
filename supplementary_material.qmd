@@ -134,7 +134,7 @@ ggplot(graph_data, aes(x = Year, y = Soybeans_Production, color = Region)) +
 
 ## Code for the R Shiny Website
 
-The project is actually fairly huge, so it will require multiple files to run. I've separated it based off of files.
+The project is actually fairly huge, so it will require multiple files to run. I've separated it based off of files. For easier access, you may visit the repository on GitHub: <https://github.com/annahuynhly/stats780assignment1>
 
 ### app.R
 
@@ -216,6 +216,7 @@ convert_to_hex = function(hex_colour){
 comparison_barplot = function(dataset, crop_id, colours = c("#0092d6", "#da1a1a")){
   production_type = paste0(crop_id, "_Production")
   title_name = paste0("Stacked Bar Plot of ", crop_id ," Production from Manitoba and Saskatchewan")
+  # (GitHub Copilot helped with the skeleton)
   ggplot(dataset, aes(x = factor(Year), y = !!sym(production_type), fill = Region)) +
     geom_bar(stat = "identity") + 
     labs(title = title_name, x = "Year", 
@@ -227,6 +228,7 @@ comparison_barplot = function(dataset, crop_id, colours = c("#0092d6", "#da1a1a"
 comparison_lineplot = function(dataset, crop_id, colours = c("#0092d6", "#da1a1a")){
   production_type = paste0(crop_id, "_Production")
   title_name = paste0("Line Plots of ", crop_id ," Production from Manitoba and Saskatchewan")
+  # (GitHub Copilot helped with the skeleton)
   ggplot(dataset, aes(x = Year, y = !!sym(production_type), color = Region)) +
     geom_line(linewidth = 1) +   
     geom_point(size = 3) +      
@@ -245,6 +247,7 @@ individual_barplot = function(dataset, type, crop_id, colour = c("#0092d6")){
     graph_title = paste0("Stacked Bar Plot of ", crop_id, " Production from Saskatchewan")
     individual_data = subset(dataset, Region == "Saskatchewan")
   }
+  # (GitHub Copilot helped with the skeleton)
   ggplot(individual_data, aes(x = factor(Year), y = !!sym(production_type))) +
     geom_bar(stat = "identity", fill = colour[1]) + 
     labs(title = graph_title, x = "Year", 
@@ -261,6 +264,7 @@ individual_lineplot = function(dataset, type, crop_id, colour = c("#0092d6")){
     graph_title = paste0("Line Plot of ", crop_id, " Production from Saskatchewan")
     individual_data = subset(dataset, Region == "Saskatchewan")
   }
+  # (GitHub Copilot helped with the skeleton)
   ggplot(individual_data, aes(x = Year, y = !!sym(production_type))) +
     geom_line(linewidth = 1, color = colour[1]) +   
     geom_point(size = 3, color = colour[1]) +     
@@ -278,7 +282,8 @@ individual_lineplot = function(dataset, type, crop_id, colour = c("#0092d6")){
 page_contact = div(
   titlePanel("Contact"),
   
-  p('This website is maintained by Anna Ly. If you find any bugs on this website, please contact lya19@mcmaster.ca.'),
+  p('This website is maintained by Anna Ly. If you find any bugs on this website, please contact 
+    lya19@mcmaster.ca.'),
   
   tags$style("#project-grid {
                       display: grid;
@@ -307,37 +312,19 @@ page_contact = div(
 page_credit = div(
   titlePanel("Credits"),
   tags$div(
-    "I constructed this website using ",
-    tags$a(href="https://www.r-project.org/about.html", "R."),
-    "Specifically, I used the ",
-    tags$a(href="https://shiny.rstudio.com/", "R Shiny "),
-    "package. The website theme is flatly from ",
-    tags$a(href="https://rstudio.github.io/shinythemes/", "shinythemes."),
+    "I constructed this website using ",tags$a(href="https://www.r-project.org/about.html", "R."), "Specifically, I used the ", tags$a(href="https://shiny.rstudio.com/", "R Shiny "), "package. The website theme is flatly from ", tags$a(href="https://rstudio.github.io/shinythemes/", "shinythemes."),
   ),
   br(),
-  tags$div(
-    "I used the following additonal Shiny packages: ",
-    tags$a(href="https://cran.r-project.org/web/packages/shinycssloaders/index.html", "shinycssloaders"),
-    " (for loading screens), ",
-    tags$a(href="https://cran.r-project.org/web/packages/colourpicker/index.html", "colourpicker"),
-    " (for users to manually select a colour).",
+  tags$div("I used the following additonal Shiny packages: ", tags$a(href="https://cran.r-project.org/web/packages/shinycssloaders/index.html", "shinycssloaders"), " (for loading screens), ", tags$a(href="https://cran.r-project.org/web/packages/colourpicker/index.html", "colourpicker"), " (for users to manually select a colour).",
   ),
   br(),
-  tags$div(
-    "I also used ",
-    tags$a(href="https://cran.r-project.org/web/packages/tidyverse/index.html", "tidyverse"),
-    " specifically ggplot2 to make the graphs."
+  tags$div("I also used ", tags$a(href="https://cran.r-project.org/web/packages/tidyverse/index.html", "tidyverse"), " specifically ggplot2 to make the graphs."
   ),
   br(),
-  tags$div(
-    "I also occasionally used ",
-    tags$a(href="https://github.com/features/copilot","GitHub Copilot"),
-    " to help me write code."
+  tags$div("I also occasionally used ", tags$a(href="https://github.com/features/copilot","GitHub Copilot"), " to help me write code."
   ),
   br(),
-  tags$div(
-    "The colour themes were self-chosen, except for \"Jack in, Execute!\" which is a reference to the ",
-    tags$a(href="https://en.wikipedia.org/wiki/Mega_Man_Battle_Network", "Mega Man Battle Network Series.")
+  tags$div("The colour themes were self-chosen, except for \"Jack in, Execute!\" which is a reference to the ", tags$a(href="https://en.wikipedia.org/wiki/Mega_Man_Battle_Network", "Mega Man Battle Network Series.")
   )
 )
 
@@ -358,7 +345,7 @@ page_home = div(
   titlePanel("Creating Graphs of Different Crops"),
   sidebarLayout(
     sidebarPanel(
-      
+      # GitHub Copilot helped with the skeleton for this section, particularly, the possible inputs.
       selectInput(inputId = "select_crop", 
                   label = "Select a crop!", 
                   choices = ALL_CROP_TYPES,
@@ -435,33 +422,33 @@ use_colours = reactive({
   }
 })
 
-individual_barplot_value = reactive({
+individual_barplot_value = reactive({ #(GitHub Copilot helped with the skeleton)
   individual_barplot(dataset = GRAPHING_DATASET, 
                      type = input$select_region, 
                      crop_id = input$select_crop, 
                      colour = convert_to_hex(input$ind_colour))
 })
 
-individual_lineplot_value = reactive({
+individual_lineplot_value = reactive({ #(GitHub Copilot helped with the skeleton)
   individual_lineplot(dataset = GRAPHING_DATASET, 
                      type = input$select_region, 
                      crop_id = input$select_crop, 
                      colour = convert_to_hex(input$ind_colour))
 })
 
-comparison_barplot_value = reactive({
+comparison_barplot_value = reactive({ #(GitHub Copilot helped with the skeleton)
   comparison_barplot(dataset = GRAPHING_DATASET,
                      crop_id = input$select_crop,
                      colours = use_colours())
 })
 
-comparison_lineplot_value = reactive({
+comparison_lineplot_value = reactive({ #(GitHub Copilot helped with the skeleton)
   comparison_lineplot(dataset = GRAPHING_DATASET,
                       crop_id = input$select_crop,
                       colours = use_colours())
 })
 
-# Making the comparison plots
+# Making the comparison plots (GitHub Copilot helped with the skeleton)
 output$comparison_crop_plot = renderPlot({
   if(input$type_graph == 1){ # Stacked Bar Plot case
     comparison_barplot_value()
@@ -470,10 +457,13 @@ output$comparison_crop_plot = renderPlot({
   }
 })
 
+# Making the comparison plots (GitHub Copilot helped with the skeleton)
 output$individual_crop_plot = renderPlot({
-  if(input$type_graph == 1){ # Stacked Bar Plot case
+  if(input$type_graph == 1){
+    # Stacked Bar Plot case
     individual_barplot_value()
-  } else if (input$type_graph == 2){ # Line Plot case
+  } else if (input$type_graph == 2){
+    # Line Plot case
     individual_lineplot_value()
   } 
 })

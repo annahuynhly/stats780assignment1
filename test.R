@@ -99,7 +99,9 @@ for(crop in ALL_CROP_TYPES){
   VALUES_DATASET = add_crop_data(VALUES_DATASET, crop_id = crop)
 }
 
-write.csv(VALUES_DATASET, "CropData3.csv", row.names=FALSE)
+write.csv(VALUES_DATASET, "CropData.csv", row.names=FALSE)
+
+
 
 
 #codes_crop = c(132, 133, 135, 136, 137, 138, 139, 140, 142, 143, 147, 158, 162, 163, 167, 168, 174)

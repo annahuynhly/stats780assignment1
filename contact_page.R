@@ -32,37 +32,19 @@ page_contact = div(
 page_credit = div(
   titlePanel("Credits"),
   tags$div(
-    "I constructed this website using ",
-    tags$a(href="https://www.r-project.org/about.html", "R."),
-    "Specifically, I used the ",
-    tags$a(href="https://shiny.rstudio.com/", "R Shiny "),
-    "package. The website theme is flatly from ",
-    tags$a(href="https://rstudio.github.io/shinythemes/", "shinythemes."),
+    "I constructed this website using ",tags$a(href="https://www.r-project.org/about.html", "R."), "Specifically, I used the ", tags$a(href="https://shiny.rstudio.com/", "R Shiny "), "package. The website theme is flatly from ", tags$a(href="https://rstudio.github.io/shinythemes/", "shinythemes."),
   ),
   br(),
-  tags$div(
-    "I used the following additonal Shiny packages: ",
-    tags$a(href="https://cran.r-project.org/web/packages/shinycssloaders/index.html", "shinycssloaders"),
-    " (for loading screens), ",
-    tags$a(href="https://cran.r-project.org/web/packages/colourpicker/index.html", "colourpicker"),
-    " (for users to manually select a colour).",
+  tags$div("I used the following additonal Shiny packages: ", tags$a(href="https://cran.r-project.org/web/packages/shinycssloaders/index.html", "shinycssloaders"), " (for loading screens), ", tags$a(href="https://cran.r-project.org/web/packages/colourpicker/index.html", "colourpicker"), " (for users to manually select a colour).",
   ),
   br(),
-  tags$div(
-    "I also used ",
-    tags$a(href="https://cran.r-project.org/web/packages/tidyverse/index.html", "tidyverse"),
-    " specifically ggplot2 to make the graphs."
+  tags$div("I also used ", tags$a(href="https://cran.r-project.org/web/packages/tidyverse/index.html", "tidyverse"), " specifically ggplot2 to make the graphs."
   ),
   br(),
-  tags$div(
-    "I also occasionally used ",
-    tags$a(href="https://github.com/features/copilot","GitHub Copilot"),
-    " to help me write code."
+  tags$div("I also occasionally used ", tags$a(href="https://github.com/features/copilot","GitHub Copilot"), " to help me write code."
   ),
   br(),
-  tags$div(
-    "The colour themes were self-chosen, except for \"Jack in, Execute!\" which is a reference to the ",
-    tags$a(href="https://en.wikipedia.org/wiki/Mega_Man_Battle_Network", "Mega Man Battle Network Series.")
+  tags$div("The colour themes were self-chosen, except for \"Jack in, Execute!\" which is a reference to the ", tags$a(href="https://en.wikipedia.org/wiki/Mega_Man_Battle_Network", "Mega Man Battle Network Series.")
   )
 )
 

@@ -3,7 +3,7 @@ page_home = div(
   titlePanel("Creating Graphs of Different Crops"),
   sidebarLayout(
     sidebarPanel(
-      
+      # GitHub Copilot helped with the skeleton for this section, particularly, the possible inputs.
       selectInput(inputId = "select_crop", 
                   label = "Select a crop!", 
                   choices = ALL_CROP_TYPES,
@@ -42,7 +42,7 @@ page_home = div(
         
         conditionalPanel( 
           condition = "input.colour_scheme_type == 'manual'",
-          # Let the user decide the colour for Sask
+          # Let the user decide the colour for Sask 
           colourInput(inputId = "comp_sask_colour",
                       label = "Choose a colour to represent Saskatchewan",
                       value = "6699FF"), 
